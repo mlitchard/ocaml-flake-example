@@ -12,6 +12,7 @@
   #     $ nix flake lock --update-input <input> ... --commit-lockfile
   #
   inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-22.11";
     # Convenience functions for writing flakes
     flake-utils.url = "github:numtide/flake-utils";
     # Precisely filter files copied to the nix store
@@ -19,6 +20,7 @@
   };
 
   outputs = { self, nixpkgs, flake-utils, nix-filter }:
+    with import nixpkgs { system = "x86_64-linux"; };
     # Construct an output set that supports a number of default systems
     flake-utils.lib.eachDefaultSystem (system:
       let
